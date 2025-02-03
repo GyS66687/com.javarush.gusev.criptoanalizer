@@ -8,6 +8,7 @@ public class MainApp {
 
         Cipher cipher = new Cipher();
         FileManager fl = new FileManager();
+        Validator validator = new Validator();
 
 
 //        FileManager fileManager = new FileManager();
@@ -32,33 +33,50 @@ public class MainApp {
             case 1:
                 System.out.println("Введите путь к исходному файлу");
                 String inputPath = input.next();
-                System.out.println("Введите ключ");
-                int k = input.nextInt();
-                String fileContent = fl.readFile(inputPath);
+                if (validator.isFileExists(inputPath)) {
+                    System.out.println("Введите ключ");
+                    int k = input.nextInt();
+                    if (validator.isValidKey(k)) {
+                        String fileContent = fl.readFile(inputPath);
 
-                String encryptedContent = cipher.encrypt(fileContent, k);
+                        String encryptedContent = cipher.encrypt(fileContent, k);
 
-                System.out.println(encryptedContent);
+//                System.out.println(encryptedContent);
 
-                System.out.println("Введите путь для хранения зашифрованного файла.");
-                String outputPath = input.next();
-                fl.writeFile(encryptedContent, outputPath);
+                        System.out.println("Введите путь для хранения зашифрованного файла.");
+                        String outputPath = input.next();
+                        fl.writeFile(encryptedContent, outputPath);
 
+                        System.out.println("Рад был встречи");
+                    } else {
+                        System.out.println("Не допустимое значение ключа");
+                    }
+                }else {
+                    System.out.println("файла по такому пути не существует");
+                }
                 break;
             case 2:
                 System.out.println("Введите путь к зашифрованному файлу");
                 String encryptPath = input.next();
-                System.out.println("Введите ключ");
-                int shift = input.nextInt();
-                String encContent = fl.readFile(encryptPath);
+                if (validator.isFileExists(encryptPath)) {
+                    System.out.println("Введите ключ");
+                    int shift = input.nextInt();
+                    if (validator.isValidKey(shift)) {
+                        String encContent = fl.readFile(encryptPath);
 
-                String decryptContent = cipher.decrypt(encContent, shift);
+                        String decryptContent = cipher.decrypt(encContent, shift);
 
-                System.out.println(decryptContent);
+//                System.out.println(decryptContent);
 
-                System.out.println("Введите путь для хранения зашифрованного файла.");
-                String outputPathDeCrypt = input.next();
-                fl.writeFile(decryptContent, outputPathDeCrypt);
+                        System.out.println("Введите путь для хранения расшифрованного файла.");
+                        String outputPathDeCrypt = input.next();
+                        fl.writeFile(decryptContent, outputPathDeCrypt);
+
+                        System.out.println("Рад был встречи");
+                    }
+                } else {
+                    System.out.println("файла по такому пути не существует");
+                }
 
                 break;
 
