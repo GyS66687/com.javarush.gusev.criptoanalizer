@@ -15,7 +15,6 @@ public class Cipher {
             }
         }
         return result.toString();
-
     }
 
     public String decrypt(String encryptedText, int shift) {

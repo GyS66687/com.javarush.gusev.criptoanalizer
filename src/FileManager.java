@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,28 +14,12 @@ public class FileManager {
 
     public void writeFile(String content, String filePath) throws IOException {
         // Логика записи файла
-        Files.write(Paths.get(filePath), content.getBytes());
+        try {
+            Files.write(Paths.get(filePath), content.getBytes());
+        } catch (AccessDeniedException e) {
+
+            System.out.println(e + "Access denied");
+        }
     }
-
-
-
-//        -------------------------
-//        написано ранее
-//        String line = "";
-//        List <String> lines = new ArrayList<>();
-//        File file = new File(filePath);
-////        System.out.println(file.canRead());
-//        try (BufferedReader input = Files.newBufferedReader(file.toPath())) {
-//            while ((line = input.readLine()) != null){
-//
-////                System.out.println(line);
-//             lines.add(line);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return lines;
-//        -------------------------------------
-
 
 }
